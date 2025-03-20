@@ -1,0 +1,8 @@
+[submodule "Packages/DracoUnity"]
+	path = Packages/DracoUnity
+	url = https://github.com/Kibsgaard/DracoUnity
+	branch = submeshes
+[submodule "Packages/glTFast"]
+	path = Packages/glTFast
+	url = https://github.com/Kibsgaard/com.unity.cloud.gltfast.git
+	branch = submeshes
