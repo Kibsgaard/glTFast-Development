@@ -72,6 +72,9 @@ Assets/Plugins/**       linguist-vendored
 *.c4d                   lfs
 *.collada               lfs
 *.dae                   lfs
+*.glb                   lfs
+*.gltf                  lfs
+*.bin                   lfs
 *.dxf                   lfs
 *.FBX                   lfs
 *.fbx                   lfs
