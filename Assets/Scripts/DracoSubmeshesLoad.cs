@@ -10,6 +10,7 @@ namespace GLTFast.Development
     public class DracoSubmeshesLoad : MonoBehaviour
     {
         [SerializeField] private bool _logVertsAndIndices;
+        [SerializeField] private bool _logBounds;
         
         private async void OnEnable()
         {
@@ -24,7 +25,7 @@ namespace GLTFast.Development
 
             var logger = new ConsoleLogger();
             var gltfImport = new GLTFast.GltfImport(logger: logger);
-            var importSettings = new ImportSettings();
+            var importSettings = new ImportSettings{NodeNameMethod = NameImportMethod.OriginalUnique};
             var success = await gltfImport.Load(Path.Combine(Application.streamingAssetsPath, $"{name}.glb"),
                 importSettings);
             if (!success)
@@ -46,21 +47,34 @@ namespace GLTFast.Development
             if (animation != null)
                 animation.Play();
 
-            Debug.Log($"[{name}] Instantiated main scene");
-            
+           
             if (_logVertsAndIndices)
             {
                 var meshFilters = GetComponentsInChildren<MeshFilter>();
                 foreach (var meshFilter in meshFilters)
                 {
-                    Debug.Log(string.Join(", ", meshFilter.sharedMesh.vertices));
-                    Debug.Log(string.Join(", ", meshFilter.sharedMesh.triangles));
+                    Debug.Log(string.Join(", ", name, meshFilter.sharedMesh.vertices), this);
+                    Debug.Log(string.Join(", ", name, meshFilter.sharedMesh.triangles), this);
                 }
                 var skinnedMeshRenderers = GetComponentsInChildren<SkinnedMeshRenderer>();
                 foreach (var skinnedMeshRenderer in skinnedMeshRenderers)
                 {
-                    Debug.Log(string.Join(", ", skinnedMeshRenderer.sharedMesh.vertices));
-                    Debug.Log(string.Join(", ", skinnedMeshRenderer.sharedMesh.triangles));
+                    Debug.Log(string.Join(", ", name, skinnedMeshRenderer.sharedMesh.vertices), this);
+                    Debug.Log(string.Join(", ", name, skinnedMeshRenderer.sharedMesh.triangles), this);
+                }
+            }
+
+            if (_logBounds)
+            {
+                var meshFilters = GetComponentsInChildren<MeshFilter>();
+                foreach (var meshFilter in meshFilters)
+                {
+                    Debug.Log(string.Join(", ", name, meshFilter.sharedMesh.bounds), this);
+                }
+                var skinnedMeshRenderers = GetComponentsInChildren<SkinnedMeshRenderer>();
+                foreach (var skinnedMeshRenderer in skinnedMeshRenderers)
+                {
+                    Debug.Log(string.Join(", ", name, skinnedMeshRenderer.sharedMesh.bounds), this);
                 }
             }
         }
